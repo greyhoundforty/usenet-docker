@@ -13,15 +13,15 @@ services:
         image: linuxserver/sabnzbd:latest
         container_name: sabnzbd
         volumes:
-            - /data_directory_path/config/sabnzbd:/config
-            - /data_directory_path/Downloads/complete:/downloads
-            - /data_directory_path/Downloads/incomplete:/incomplete-downloads
+            - /home/ryan/media/config/sabnzbd:/config
+            - /home/ryan/media/Downloads/complete:/downloads
+            - /home/ryan/media/Downloads/incomplete:/incomplete-downloads
         ports:
             - 8080:8080
         env_file: uidgid.env
         environment:
             - EDGE=1
-            - VIRTUAL_HOST=sabnzbd.HOSTNAME.com
+            - VIRTUAL_HOST=sabnzbd.tinylab.info
             - VIRTUAL_PORT=8080
         restart: always
 
@@ -29,14 +29,14 @@ services:
         image: linuxserver/couchpotato:latest
         container_name: couchpotato
         volumes:
-            - /data_directory_path/config/couchpotato:/config
-            - /data_directory_path/Downloads/complete:/downloads
-            - /data_directory_path/Movies:/movies
+            - /home/ryan/media/config/couchpotato:/config
+            - /home/ryan/media/Downloads/complete:/downloads
+            - /home/ryan/media/Movies:/movies
         ports:
             - 5050:5050
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=couchpotato.HOSTNAME.com
+            - VIRTUAL_HOST=couchpotato.tinylab.info
             - VIRTUAL_PORT=5050
         restart: always
 
@@ -44,9 +44,11 @@ services:
         image: linuxserver/plex
         container_name: plex
         volumes:
-            - /data_directory_path/config/plex:/config
-            - /data_directory_path/TV:/data/tvshows
-            - /data_directory_path/Movies:/data/movies
+            - /home/ryan/media/config/plex:/config
+            - /home/ryan/media/TV:/data/tvshows
+            - /home/ryan/media/KidsTV:/data/kidstvshows
+            - /home/ryan/media/Movies:/data/movies
+            - /home/ryan/media/KidsMovies:/data/kidsmovies
         ports:
             - 32469:32469
             - 32400:32400
@@ -60,7 +62,7 @@ services:
             - 32414:32414/udp
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=plex.HOSTNAME.com
+            - VIRTUAL_HOST=plex.tinylab.info
             - VIRTUAL_PORT=32400
         restart: always
 
@@ -68,15 +70,15 @@ services:
         image: linuxserver/sonarr
         container_name: sonarr
         volumes:
-            - /data_directory_path/config/sonarr:/config
+            - /home/ryan/media/config/sonarr:/config
             - /etc/localtime:/etc/localtime:ro
-            - /data_directory_path/TV:/tv
-            - /data_directory_path/Downloads/complete:/downloads
+            - /home/ryan/media/TV:/tv
+            - /home/ryan/media/Downloads/complete:/downloads
         ports:
             - 8989:8989
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=sonarr.HOSTNAME.com
+            - VIRTUAL_HOST=sonarr.tinylab.info
             - VIRTUAL_PORT=8989
         restart: always
 
@@ -84,14 +86,14 @@ services:
         image: linuxserver/plexpy
         container_name: plexpy
         volumes:
-            - /data_directory_path/config/plexpy:/config
+            - /home/ryan/media/config/plexpy:/config
             - /etc/localtime:/etc/localtime:ro
-            - /data_directory_path/config/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
+            - /home/ryan/media/config/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
         ports:
             - 8181:8181
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=plexpy.HOSTNAME.com
+            - VIRTUAL_HOST=plexpy.tinylab.info
             - VIRTUAL_PORT=8181
         restart: always
 
@@ -99,14 +101,14 @@ services:
         image: linuxserver/hydra
         container_name: nzbhydra
         volumes:
-            - /data_directory_path/config/nzbhydra:/config
-            - /data_directory_path/Downloads:/downloads
+            - /home/ryan/media/config/nzbhydra:/config
+            - /home/ryan/media/Downloads:/downloads
             - /etc/localtime:/etc/localtime:ro
         ports:
             - 5075:5075
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=nzbhydra.HOSTNAME.com
+            - VIRTUAL_HOST=nzbhydra.tinylab.info
             - VIRTUAL_PORT=5075
         restart: always
 
@@ -114,26 +116,26 @@ services:
         image: linuxserver/muximux
         container_name: muximux
         volumes:
-            - /data_directory_path/config/muximux:/config
+            - /home/ryan/media/config/muximux:/config
             - /etc/localtime:/etc/localtime:ro
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=muximux.HOSTNAME.com
+            - VIRTUAL_HOST=muximux.tinylab.info
         restart: always
 
     radarr:
         image: linuxserver/radarr
         container_name: radarr
         volumes:
-            - /data_directory_path/config/radarr:/config
-            - /data_directory_path/Movies:/movies
-            - /data_directory_path/Downloads/complete:/downloads
+            - /home/ryan/media/config/radarr:/config
+            - /home/ryan/media/Movies:/movies
+            - /home/ryan/media/Downloads/complete:/downloads
             - /etc/localtime:/etc/localtime:ro
         ports:
             - 7878:7878
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=radarr.HOSTNAME.com
+            - VIRTUAL_HOST=radarr.tinylab.info
             - VIRTUAL_PORT=7878
         restart: always
 
@@ -141,13 +143,13 @@ services:
         image: linuxserver/ombi
         container_name: ombi
         volumes:
-            - /data_directory_path/config/ombi:/config
+            - /home/ryan/media/config/ombi:/config
             - /etc/localtime:/etc/localtime:ro
         ports:
             - 3579:3579
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=ombi.HOSTNAME.com
+            - VIRTUAL_HOST=ombi.tinylab.info
             - VIRTUAL_PORT=3579
         restart: always
 
@@ -155,13 +157,13 @@ services:
         image: linuxserver/nzbget
         container_name: nzbget
         volumes:
-            - /data_directory_path/config/nzbget:/config
-            - /data_directory_path/Downloads/complete:/complete
-            - /data_directory_path/Downloads:/downloads
+            - /home/ryan/media/config/nzbget:/config
+            - /home/ryan/media/Downloads/complete:/complete
+            - /home/ryan/media/Downloads:/downloads
         ports:
             - 6789:6789
         env_file: uidgid.env
         environment:
-            - VIRTUAL_HOST=nzbget.HOSTNAME.com
+            - VIRTUAL_HOST=nzbget.tinylab.info
             - VIRTUAL_PORT=6789
         restart: always
